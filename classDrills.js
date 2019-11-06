@@ -106,17 +106,63 @@ function twoDee(arr) {
   return newArr
 }
 
-const arr = [[1,0,1,1,0],
+const arr = [
+[1,0,1,1,0],
 [0,1,1,1,0],
 [1,1,1,1,1],
 [1,0,1,1,1],
-[1,1,1,1,1]];
+[1,1,1,1,1]
+];
 
-console.log(twoDee(arr))
+function problem12(arr) {
+  let rows = [];
+  let columns = [];
 
-//#12 String Rotation 
-// function strRotate(str1, str2) {
+  for (let y=0; y<arr.length; y++) {
+    for(let x=0; x<arr[y].length; x++) {
+      if (arr[y][x] === 0) {
+        columns[x] = true;
+        rows[y] = true;
+      }
+    }
+  }
+  let newArray = [];
+  arr.forEach(item => newArray.push([]));
+  for (let y=0; y<arr.length; y++) {
+    for(let x=0; x<arr[y].length; x++) {
+      if (columns[x] !== true && rows[y] !== true) {
+        newArray[y][x] = 1;
+      }
+      else {
+        // if (!newArray[y]) { 
+        //   newArray.push([]);
+        // }
+        newArray[y][x] = 0;
+      }
+    }
+  }
+  return newArray;
+}
 
-// }
 
+console.log(problem12(arr))
+//Complexity: Polynomial - Quadratic. Probably can be reduced. I don't know
+
+
+//#12
+//String Rotation
+
+function strRotate(str1, str2) {
+  let newStr = str2
+  for(let i=0; i<str1.length; i++){
+    if(newStr === str1){
+      return true
+    }
+    else{
+      newStr = newStr.slice(1) + newStr.charAt(0)
+    }
+  }
+  return false
+}
+console.log(strRotate('amazon', 'azonma'))
 
