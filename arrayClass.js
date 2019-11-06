@@ -1,6 +1,6 @@
 const Memory = require('./memory.js');
 
-let memory = new Memory();
+let memory = new Memory;
 
 class Array {
   constructor(){
@@ -8,6 +8,9 @@ class Array {
     this.ptr = memory.allocate(this.length)
   }
   get(index) {
+    if (index < 0 || index >= this.length) {
+      throw new Error('Index error');
+    }
     return memory.get(this.ptr + index)
   }
   remove(index) {
@@ -24,23 +27,18 @@ class Array {
     this._resize(this.length + 1)
     memory.copy(this.ptr + index + 1, this.ptr + index, this.length - index)
     memory.set(this.ptr + index, value)
-    this.length++
+    this.length++;
   }
   push(value) {
     this._resize(this.length + 1)
-    memory.set(this.length, value)
+    memory.set(this.ptr + this.length, value)
     this.length++
   }
   pop(){
-    const value = memory.get(this.length - 1)
+    const value = memory.get(this.ptr + this.length - 1)
     this.length--
     return value;
   }
 }
 
 module.exports = Array;
-
-//5, 10, 15, 20  -> 5,10,15,20,-   ->  5,10,10,15,20  -> 5,3,10,15,20
-//0   1   2   3   i
-//3   4   5   6   block
-//1   2   3   4   length
